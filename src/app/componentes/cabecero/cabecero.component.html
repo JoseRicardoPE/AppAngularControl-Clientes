@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Control Clientes</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item px-2">
+          <a class="nav-link" routerLink="/">Inicio</a> 
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto cabecero-navbar_menu">
+        <li class="nav-item dropdown mr-3">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fas fa-user"></i>Bienvenido
+          </a>
+          <div class="dropdown-menu">
+            <a routerLink="/configuracion" class="dropdown-item">
+              <i class="fas fa-solid fa-gear"></i>Configuración
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
