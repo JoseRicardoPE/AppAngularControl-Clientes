@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule} from '@angular/fire/compat';
 import { AngularFirestoreModule, SETTINGS } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { ClienteService } from './services/clientes/cliente.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [],
+  providers: [ClienteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
