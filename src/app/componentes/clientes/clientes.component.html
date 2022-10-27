@@ -1,66 +1,187 @@
 <!-- * Botones de la parte superior -->
 <section id="actions" class="py-4 mb-4 bg-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <a href="#" class="btn btn-primary btn-block" role="button" data-bs-toggle="modal" data-bs-target="#agregarClienteModal">
-                    <i class="fas fa-plus"></i>Agregar Cliente
-                </a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a
+          href="#"
+          class="btn btn-primary btn-block"
+          role="button"
+          data-bs-toggle="modal"
+          data-bs-target="#agregarClienteModal"
+        >
+          <i class="fas fa-plus"></i>Agregar Cliente
+        </a>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- * Listado de Clientes -->
 <section id="clientes">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card-header">
-                    <h4 class="card-title color-primary">Listado de Clientes</h4>
-                </div>
-                <table class="table table-striped">
-                    <thead class="table-primary">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombres</th>
-                            <th scope="col">Saldo</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let cliente of clientes; let i=index" class="table-light">
-                            <td>{{i + 1}}</td>
-                            <td>{{cliente.nombre}} {{cliente.apellido}}</td>
-                            <td>{{cliente.saldo | currency:' COP': '$':'4.2-2' }}</td>
-                            <td>
-                                <a routerLink="/cliente/editar/{{cliente.id}}" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i>Editar
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>    
-                </table>
-            </div>
-            <!-- * Tarjetas Laterales * -->
-            <div class="col-md-4">
-                <div class="card text-center bg-warning text-white mb-3">
-                    <div class="card-body">
-                        <h3>Saldo Total</h3>
-                        <h4 class="display-6">
-                            {{getSaldoTotal() | currency: ' COP': '$':'4.2-2' }}
-                        </h4>
-                    </div>
-                </div>
-                <div class="card text-center bg-success text-white mb-3">
-                    <div class="card-body">
-                        <h3>Total Clientes</h3>
-                        <h4 class="display-6">
-                            <i class="fas fa-users"></i>{{clientes?.length}}
-                        </h4>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card-header">
+          <h4 class="card-title color-primary">Listado de Clientes</h4>
         </div>
+        <table class="table table-striped">
+          <thead class="table-primary">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombres</th>
+              <th scope="col">Saldo</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let cliente of clientes; let i = index"
+              class="table-light"
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ cliente.nombre }} {{ cliente.apellido }}</td>
+              <td>{{ cliente.saldo | currency: " COP":"$":"4.2-2" }}</td>
+              <td>
+                <a
+                  routerLink="/cliente/editar/{{ cliente.id }}"
+                  class="btn btn-secondary"
+                >
+                  <i class="fas fa-angle-double-right"></i>Editar
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- * Tarjetas Laterales * -->
+      <div class="col-md-4">
+        <div class="card text-center bg-warning text-white mb-3">
+          <div class="card-body">
+            <h3>Saldo Total</h3>
+            <h4 class="display-6">
+              {{ getSaldoTotal() | currency: " COP":"$":"4.2-2" }}
+            </h4>
+          </div>
+        </div>
+        <div class="card text-center bg-success text-white mb-3">
+          <div class="card-body">
+            <h3>Total Clientes</h3>
+            <h4 class="display-6">
+              <i class="fas fa-users"></i>{{ clientes?.length }}
+            </h4>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- * Modal para agregar cliente -->
+<section
+  class="modal fade"
+  id="agregarClienteModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-light">
+        <h5 class="modal-title">Agregar Cliente</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          (ngSubmit)="agregarCliente(clienteForm.form)"
+          #clienteForm="ngForm"
+        >
+          <div class="form-group mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nombre"
+              name="nombre"
+              #nombre="ngModel"
+              [(ngModel)]="cliente.nombre"
+              [ngClass]="{'is-invalid': nombre.errors && nombre.touched}"
+              required
+              minlength="2"
+              />
+            <!-- * mensaje de validación -->
+            <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
+                ¡Dege ingresar un nombre para poder continuar!
+            </div>
+            <div [hidden]="!nombre.errors?.['minlength']" class="invalid-feedback">
+                ¡El nombre debe contener al menos dos carácteres!
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Apellido"
+                name="apellido"
+                #apellido="ngModel"
+                [(ngModel)]="cliente.apellido"
+                [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
+                required=""
+                minlength="2" 
+                />
+            <!-- * mensaje de validación -->
+            <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
+                ¡Dege ingresar un apellido para poder continuar!
+            </div>
+            <div [hidden]="!apellido.errors?.['minlength']" class="invalid-feedback">
+                ¡El apellido debe contener al menos dos carácteres!
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="name@example.com"
+              name="email"
+              #email="ngModel"
+              [(ngModel)]="cliente.email"
+              [ngClass]="{'is-invalid': email.errors && email.touched}"
+              required=""
+              minlength=""
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="saldo" class="form-label">Saldo</label>
+            <input type="number" class="form-control" placeholder="Saldo" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="reset"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+        >
+      </div>
+    </div>
+  </div>
 </section>
