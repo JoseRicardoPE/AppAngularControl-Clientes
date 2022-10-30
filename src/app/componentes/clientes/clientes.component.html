@@ -96,6 +96,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          #botonCerrar
         ></button>
       </div>
       <div class="modal-body">
@@ -112,37 +113,49 @@
               name="nombre"
               #nombre="ngModel"
               [(ngModel)]="cliente.nombre"
-              [ngClass]="{'is-invalid': nombre.errors && nombre.touched}"
+              [ngClass]="{ 'is-invalid': nombre.errors && nombre.touched }"
               required
               minlength="2"
-              />
+            />
             <!-- * mensaje de validación -->
-            <div [hidden]="!nombre.errors?.['required']" class="invalid-feedback">
-                ¡Dege ingresar un nombre para poder continuar!
+            <div
+              [hidden]="!nombre.errors?.['required']"
+              class="invalid-feedback"
+            >
+              ¡Dege ingresar un nombre para poder continuar!
             </div>
-            <div [hidden]="!nombre.errors?.['minlength']" class="invalid-feedback">
-                ¡El nombre debe contener al menos dos carácteres!
+            <div
+              [hidden]="!nombre.errors?.['minlength']"
+              class="invalid-feedback"
+            >
+              ¡El nombre debe contener al menos dos carácteres!
             </div>
           </div>
           <div class="form-group mb-3">
             <label for="apellido" class="form-label">Apellido</label>
-            <input 
-                type="text" 
-                class="form-control" 
-                placeholder="Apellido"
-                name="apellido"
-                #apellido="ngModel"
-                [(ngModel)]="cliente.apellido"
-                [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
-                required=""
-                minlength="2" 
-                />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Apellido"
+              name="apellido"
+              #apellido="ngModel"
+              [(ngModel)]="cliente.apellido"
+              [ngClass]="{ 'is-invalid': apellido.errors && apellido.touched }"
+              required=""
+              minlength="2"
+            />
             <!-- * mensaje de validación -->
-            <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
-                ¡Dege ingresar un apellido para poder continuar!
+            <div
+              [hidden]="!apellido.errors?.['required']"
+              class="invalid-feedback"
+            >
+              ¡Dege ingresar un apellido para poder continuar!
             </div>
-            <div [hidden]="!apellido.errors?.['minlength']" class="invalid-feedback">
-                ¡El apellido debe contener al menos dos carácteres!
+            <div
+              [hidden]="!apellido.errors?.['minlength']"
+              class="invalid-feedback"
+            >
+              ¡El apellido debe contener al menos dos carácteres!
             </div>
           </div>
           <div class="form-group mb-3">
@@ -154,23 +167,37 @@
               name="email"
               #email="ngModel"
               [(ngModel)]="cliente.email"
-              [ngClass]="{'is-invalid': email.errors && email.touched}"
+              [ngClass]="{ 'is-invalid': email.errors && email.touched }"
+              pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
               required=""
-              minlength=""
             />
+            <div
+              [hidden]="!email.errors?.['required']"
+              class="invalid-feedback"
+            >
+              ¡Email requerido!
+            </div>
+            <div [hidden]="!email.errors?.['pattern']" class="invalid-feedback">
+              ¡El email ingresado no es valido, inténtelo nuevamente!
+            </div>
           </div>
           <div class="form-group mb-3">
             <label for="saldo" class="form-label">Saldo</label>
-            <input type="number" class="form-control" placeholder="Saldo" />
+            <input 
+              type="number" 
+              class="form-control" 
+              placeholder="Saldo"
+              name="saldo"
+              id="saldo"
+              #saldo="ngModel"
+              [(ngModel)]="cliente.saldo"
+              [ngClass]="{'is-invalid': saldo.errors && saldo.touched}"
+              required=""/>
+              <div [hidden]="!saldo.errors?.['required']" class="invalid-feedback">
+                ¡Saldo requerido!
+              </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="reset"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Limpiar
-            </button>
             <button
               type="submit"
               class="btn btn-secondary"
@@ -180,7 +207,6 @@
             </button>
           </div>
         </form>
-        >
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Cliente } from 'src/app/modelo/cliente.model';
 import { ClienteService } from 'src/app/services/clientes/cliente.service';
 import Swal from 'sweetalert2';
@@ -18,6 +19,9 @@ export class ClientesComponent implements OnInit {
     saldo: 0,
     // id: ""
   }
+
+  @ViewChild("clienteForm") clienteForm: NgForm;
+  @ViewChild("botonCerrar") botonCerrar: ElementRef;
 
   constructor(
     private clientesServicio: ClienteService,
@@ -44,7 +48,13 @@ export class ClientesComponent implements OnInit {
         text: "¡Debe diligenciar todos los campos antes de continuar!"
       })
     } else {
-
+      this.clientesServicio.agregarCliente(value);
+      this.clienteForm.resetForm();
+      this.cerrarModal();
     }
+  }
+
+  private cerrarModal() {
+    this.botonCerrar.nativeElement.click();
   }
 }
